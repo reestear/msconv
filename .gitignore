@@ -1,0 +1,6 @@
+.DS_Store
+/venv
+/media
+__pycache__/
+pids/
+logs/

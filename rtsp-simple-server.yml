@@ -1,0 +1,67 @@
+
+logLevel: info
+logDestinations: [file]
+logFile: logs/mediamtx.log
+
+readTimeout: 10s
+writeTimeout: 10s
+writeQueueSize: 512
+
+# Authentication
+# Дозволяем доступ всем пользователям
+authMethod: internal
+authInternalUsers:
+  - user: any
+    pass:
+    ips: []
+    permissions:
+    - action: publish
+      path:
+    - action: read
+      path:
+    - action: playback
+      path:
+    - action: api
+    - action: metrics
+    - action: pprof
+
+
+# Enable RTSP server
+rtsp: yes
+rtspTransports: [udp, multicast, tcp]
+rtspEncryption: "no"
+rtspAddress: :8554
+rtpAddress: :8000
+rtcpAddress: :8001
+multicastIPRange: 224.1.0.0/16
+multicastRTPPort: 8002
+multicastRTCPPort: 8003
+rtspAuthMethods: [basic]
+
+hls: no
+ 
+webrtc: no
+
+srt: no
+
+# Control API
+api: yes
+apiAddress: :9997
+
+# Metrics
+metrics: yes
+metricsAddress: :9998
+
+pathDefaults:
+  source: publisher
+  maxReaders: 0
+
+paths:  
+  ~^(.+)$:
+    source: rtmp://nginx-rtmp:1935/live/$G1
+    sourceOnDemand: yes
+    sourceOnDemandStartTimeout: 10s
+    sourceOnDemandCloseAfter: 10s
+
+  all_others:
+    source: publisher
