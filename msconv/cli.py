@@ -173,17 +173,37 @@ def stop(stream_key):
 
 
 @cli.command("list")
-@click.option("--nginx-host", default="localhost", help="nginx-rtmp host")
-@click.option("--nginx-stat-port", default="8080", help="nginx-rtmp stat port")
-@click.option("--media-host", default="localhost", help="MediaMTX host")
-@click.option("--media-api-port", default="9997", help="MediaMTX API port")
+@click.option(
+    "--nginx-host",
+    default="localhost",
+    help="nginx-rtmp host",
+    show_default=True,
+)
+@click.option(
+    "--nginx-stat-port",
+    default="8080",
+    help="nginx-rtmp stat port",
+    show_default=True,
+)
+@click.option(
+    "--media-host",
+    default="localhost",
+    help="MediaMTX host",
+    show_default=True,
+)
+@click.option(
+    "--media-api-port",
+    default="9997",
+    help="MediaMTX API port",
+    show_default=True,
+)
 @click.option(
     "--source",
     # можно дополнить другими источниками монитроинга на выбор, главное чтобы была имлпементация
     # которая реализует StreamLister, в данном случае захардкодил только nginx
     type=click.Choice(["nginx"]),
-    required=True,
     default="nginx",
+    show_default=True,
     help="Source to list streams from",
 )
 def list_streams(nginx_host, nginx_stat_port, media_host, media_api_port, source):
